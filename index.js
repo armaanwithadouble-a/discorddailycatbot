@@ -2,8 +2,8 @@ const { Client, GatewayIntentBits, SlashCommandBuilder, REST, Routes } = require
 const axios = require('axios');
 
 // Bot configuration
-const TOKEN = process.env.DISCORD_TOKEN;
-const CLIENT_ID = process.env.CLIENT_ID;
+const TOKEN = process.env.DISCORD_TOKEN || require('./config.js').DISCORD_TOKEN;
+const CLIENT_ID = process.env.CLIENT_ID || require('./config.js').CLIENT_ID;
 
 // Store active channels for cat sending
 const activeChannels = new Set();
