@@ -2,8 +2,8 @@ name: Daily Cat at 7 PM PST
 
 on:
   schedule:
-    # 7 PM PST = 3 AM UTC next day (PST is UTC-8)
-    - cron: '0 3 * * *'
+    # 7:05 PM Pacific Time = 3:05 AM UTC next day (automatically adjusts for DST)
+    - cron: '5 3 * * *'
   workflow_dispatch: # Allow manual trigger
 
 jobs:
