@@ -1,54 +1,49 @@
-# CatBot Discord Bot
+# Daily Cat Webhook
 
-A Discord bot that sends random cat images every minute to channels where it's been activated.
+Automatically sends random cat images to Discord at 7 PM PST daily using GitHub Actions and webhooks.
 
-## Features
+## How it works
 
-- 🐱 Sends random cat images from The Cat API
-- ⏰ Automatic sending every minute
-- 📍 Channel-specific activation with `/startdailycatshere`
-- 🚫 Prevents duplicate activation in same channel
-- ✅ Immediate cat delivery when activated
+- **GitHub Actions** runs daily at 7 PM PST (3 AM UTC)
+- **Fetches** random cat from The Cat API
+- **Sends** to Discord via webhook
+- **No hosting needed** - runs on GitHub's servers
 
 ## Setup
 
-1. **Install dependencies:**
-```bash
-npm install
-```
+### 1. Create Discord Webhook
 
-2. **Create Discord Application:**
-   - Go to [Discord Developer Portal](https://discord.com/developers/applications)
-   - Create New Application
-   - Go to Bot section and create bot
-   - Copy the Bot Token
+1. Go to your Discord channel
+2. Edit Channel → Integrations → Webhooks
+3. Create Webhook
+4. Copy the webhook URL
 
-3. **Get Client ID:**
-   - In your application, go to General Information
-   - Copy the Application ID
+### 2. Add Webhook to GitHub Secrets
 
-4. **Configure bot:**
-   - Copy `config.example.js` to `config.js`
-   - Fill in your `DISCORD_TOKEN` and `CLIENT_ID`
+1. Go to your GitHub repo
+2. Settings → Secrets and variables → Actions
+3. New repository secret
+4. Name: `DISCORD_WEBHOOK_URL`
+5. Value: Your webhook URL
 
-5. **Invite bot to server:**
-   - Go to OAuth2 > URL Generator
-   - Select scopes: `bot`, `applications.commands`
-   - Select permissions: `Send Messages`, `Use Slash Commands`
-   - Use the generated URL to invite bot
+### 3. That's it!
 
-6. **Run bot:**
-```bash
-npm start
-```
+The workflow will automatically run daily at 7 PM PST and send random cats to your Discord channel.
 
-## Usage
+## Manual Trigger
 
-- Use `/startdailycatshere` in any channel to start daily cats
-- Bot will send a random cat image every minute
-- Each channel can only be activated once
-- Cats are fetched fresh from The Cat API each time
+Want to test it? Go to Actions tab → Daily Cat → Run workflow → Run workflow
 
-## Commands
+## Customization
 
-- `/startdailycatshere` - Start sending daily cats in current channel
+- **Change time**: Edit the cron schedule in `.github/workflows/daily-cat.yml`
+- **Change message**: Edit the content in the workflow
+- **Add multiple channels**: Create multiple webhooks and add them as separate secrets
+
+## No Bot Needed!
+
+This approach uses webhooks instead of bot accounts:
+- ✅ No hosting costs
+- ✅ No bot permissions
+- ✅ Runs automatically
+- ✅ Simple setup

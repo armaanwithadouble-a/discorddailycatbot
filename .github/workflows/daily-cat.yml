@@ -1,0 +1,30 @@
+name: Daily Cat at 7 PM PST
+
+on:
+  schedule:
+    # 7 PM PST = 3 AM UTC next day (PST is UTC-8)
+    - cron: '0 3 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  send-cat:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Send cat to Discord
+      run: |
+        # Get random cat image
+        CAT_RESPONSE=$(curl -s "https://api.thecatapi.com/v1/images/search")
+        CAT_URL=$(echo $CAT_RESPONSE | grep -o '"url":"[^"]*"' | cut -d'"' -f4)
+        
+        # Send to Discord webhook
+        curl -X POST ${{ secrets.DISCORD_WEBHOOK_URL }} \
+          -H "Content-Type: application/json" \
+          -d "{
+            \"content\": \"🐱 Here's your daily cat!\",
+            \"embeds\": [{
+              \"image\": {
+                \"url\": \"$CAT_URL\"
+              }
+            }]
+          }"
