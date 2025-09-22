@@ -1,10 +1,10 @@
 # Daily Cat Webhook
 
-Automatically sends random cat images to Discord at 7 PM PST daily using GitHub Actions and webhooks.
+Automatically sends random cat images to Discord at midnight PST daily using GitHub Actions and webhooks.
 
 ## How it works
 
-- **GitHub Actions** runs daily at 7 PM PST (3 AM UTC)
+- **GitHub Actions** runs daily at midnight PST (8 AM UTC)
 - **Fetches** random cat from The Cat API
 - **Sends** to Discord via webhook
 - **No hosting needed** - runs on GitHub's servers
@@ -28,7 +28,7 @@ Automatically sends random cat images to Discord at 7 PM PST daily using GitHub 
 
 ### 3. That's it!
 
-The workflow will automatically run daily at 7 PM PST and send random cats to your Discord channel.
+The workflow will automatically run daily at midnight PST and send random cats to your Discord channel.
 
 ## Manual Trigger
 

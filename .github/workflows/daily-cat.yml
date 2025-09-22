@@ -1,9 +1,9 @@
-name: Daily Cat at 7 PM PST
+name: Daily Cat at Midnight PST
 
 on:
   schedule:
-    # 7:05 PM Pacific Time = 3:05 AM UTC next day (automatically adjusts for DST)
-    - cron: '5 3 * * *'
+    # Midnight Pacific Time = 8 AM UTC (automatically adjusts for DST)
+    - cron: '0 8 * * *'
   workflow_dispatch: # Allow manual trigger
 
 jobs:
@@ -17,11 +17,20 @@ jobs:
         CAT_RESPONSE=$(curl -s "https://api.thecatapi.com/v1/images/search")
         CAT_URL=$(echo $CAT_RESPONSE | grep -o '"url":"[^"]*"' | cut -d'"' -f4)
         
+        # Generate random number of meows (1-100)
+        MEOW_COUNT=$((RANDOM % 100 + 1))
+        
+        # Create meow message
+        MEOW_MESSAGE="🐱"
+        for i in $(seq 1 $MEOW_COUNT); do
+          MEOW_MESSAGE="$MEOW_MESSAGE meow"
+        done
+        
         # Send to Discord webhook
         curl -X POST ${{ secrets.DISCORD_WEBHOOK_URL }} \
           -H "Content-Type: application/json" \
           -d "{
-            \"content\": \"🐱 Here's your daily cat!\",
+            \"content\": \"$MEOW_MESSAGE\",
             \"embeds\": [{
               \"image\": {
                 \"url\": \"$CAT_URL\"
